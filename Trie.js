@@ -43,12 +43,42 @@ class Trie{
             }
             node = node.children[char]
         }
-        return true
+        return true 
+    }
+
+    startsWithReturnAll(prefix){
+        let node = this.root
+        for(let char of prefix){
+            if(!node.children[char]){
+                return []
+            }
+            node = node.children[char]
+        }
+        return this.allWords( node , prefix)
+    }
+
+    allWords( node , prefix){
+        let words = []
+        if(node.isEndOfTheWord){
+            words.push(prefix)
+        }
+        for (let char in node.children) {
+            words = words.concat(this.allWords(node.children[char], prefix + char));
+        }
+        return words;
     }
 }
 
 let obj = new Trie()
-obj.insert("mhr")
+obj.insert("siyad")
+obj.insert("sinan")
+obj.insert("siple")
+obj.insert("sabith")
+obj.insert("basith")
+obj.insert("bashir")
+obj.insert("sajan")
 
-console.log(obj.search("mhr"))
-console.log(obj.startsWith("mh")) 
+console.log(obj.search("si"))
+// console.log(obj.startsWith("mh")) 
+
+// console.log(obj.startsWithReturnAll("si")); 
